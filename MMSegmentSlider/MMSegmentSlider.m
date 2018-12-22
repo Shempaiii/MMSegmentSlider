@@ -108,14 +108,7 @@ static CGFloat const BottomOffset = 15.0f;
     if ([[self.selectedLayer sublayers] count] == 0) {
         self.selectedImageLayer = [CALayer layer];
         self.selectedImageLayer.backgroundColor = UIColor.clearColor.CGColor;
-        
-        CGRect pathForSelectedBounds = [[self pathForSelected] bounds];
-        CGRect selectedImageRect = CGRectMake(pathForSelectedBounds.origin.x,
-                                              pathForSelectedBounds.origin.y,
-                                              pathForSelectedBounds.size.width * 0.8,
-                                              pathForSelectedBounds.size.height * 0.8);
-        
-        self.selectedImageLayer.bounds = selectedImageRect;
+        self.selectedImageLayer.bounds = [[self pathForSelected] bounds];
         self.selectedImageLayer.position = [self selectedImagePointForSelected];
         self.selectedImageLayer.contents = CFBridgingRelease((_selectedValueImage.CGImage));
         [self.selectedLayer addSublayer: self.selectedImageLayer];
@@ -196,7 +189,7 @@ static CGFloat const BottomOffset = 15.0f;
 - (CGPoint)selectedImagePointForSelected
 {
     CGPoint selectedImagePoint = [[self pathForSelected] currentPoint];
-    selectedImagePoint.x = selectedImagePoint.x - (self.selectedImageLayer.bounds.size.width * 0.63);
+    selectedImagePoint.x = selectedImagePoint.x - (self.selectedImageLayer.bounds.size.width / 2);
     return selectedImagePoint;
 }
 
