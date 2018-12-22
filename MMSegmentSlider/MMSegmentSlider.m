@@ -289,7 +289,9 @@ static CGFloat const BottomOffset = 15.0f;
     [self setNeedsLayout];
 }
 
--(void)setSelectedValueImage:(UIImage *)selectedValueImage {
+-(void)setSelectedValueImage:(UIImage *)selectedValueImage
+{
+    _selectedValueImage = selectedValueImage;
     self.selectedValueColor = UIColor.clearColor;
     [self updateLayers];
 }
