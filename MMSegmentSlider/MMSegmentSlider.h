@@ -26,7 +26,7 @@ IB_DESIGNABLE
 /**
  * Selected image
  */
-@property (nonatomic, strong) UIImage *selectedImage;
+@property (nonatomic, strong) UIImage *selectedValueImage;
 
 /**
  * Color of selected label
@@ -73,11 +73,11 @@ IB_DESIGNABLE
  */
 @property (nonatomic) NSInteger selectedItemIndex;
 
+- (void)setImage:(UIImage *)image;
+
 /**
  * Set/get selected item index (animated)
  */
 - (void)setSelectedItemIndex:(NSInteger)selectedItemIndex animated:(BOOL)animated;
-
--(void)setSelectedImage:(UIImage *)selectedImage;
 
 @end

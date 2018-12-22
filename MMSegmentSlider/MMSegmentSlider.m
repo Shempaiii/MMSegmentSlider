@@ -117,7 +117,7 @@ static CGFloat const BottomOffset = 15.0f;
     
     self.selectedImageLayer.bounds = selectedImageRect;
     self.selectedImageLayer.position = [self selectedImagePointForSelected];
-    self.selectedImageLayer.contents = CFBridgingRelease((_selectedImage.CGImage));
+    self.selectedImageLayer.contents = CFBridgingRelease((_selectedValueImage.CGImage));
     
     [self.selectedLayer addSublayer: self.selectedImageLayer];
     
@@ -293,8 +293,8 @@ static CGFloat const BottomOffset = 15.0f;
     [self setNeedsLayout];
 }
 
--(void)setSelectedImage:(UIImage *)selectedImage {
-    self.selectedImage = selectedImage;
+-(void)setImage:(UIImage *)image {
+    self.selectedValueImage = image;
     self.selectedValueColor = UIColor.clearColor;
     
     [self updateLayers];
