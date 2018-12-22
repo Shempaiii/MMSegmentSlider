@@ -9,6 +9,7 @@ static CGFloat const BottomOffset = 15.0f;
 @property (nonatomic, strong) CAShapeLayer *circlesLayer;
 @property (nonatomic, strong) CAShapeLayer *selectedLayer;
 @property (nonatomic, strong) CAShapeLayer *labelsLayer;
+@property (nonatomic, strong) CALayer *selectedImageLayer;
 
 @end
 
@@ -103,6 +104,23 @@ static CGFloat const BottomOffset = 15.0f;
     self.circlesLayer.fillColor = self.basicColor.CGColor;
     self.circlesLayer.path = [[self pathForCircles] CGPath];
     
+    // Add image to CGShapeLayer
+    
+    self.selectedImageLayer = [CALayer layer];
+    self.selectedImageLayer.backgroundColor = UIColor.clearColor.CGColor;
+    
+    CGRect pathForSelectedBounds = [[self pathForSelected] bounds];
+    CGRect selectedImageRect = CGRectMake(pathForSelectedBounds.origin.x,
+                                          pathForSelectedBounds.origin.y,
+                                          pathForSelectedBounds.size.width * 0.8,
+                                          pathForSelectedBounds.size.height * 0.8);
+    
+    self.selectedImageLayer.bounds = selectedImageRect;
+    self.selectedImageLayer.position = [self selectedImagePointForSelected];
+    self.selectedImageLayer.contents = CFBridgingRelease((_selectedImage.CGImage));
+    
+    [self.selectedLayer addSublayer: self.selectedImageLayer];
+    
     self.selectedLayer.fillColor = self.selectedValueColor.CGColor;
     self.selectedLayer.path = [[self pathForSelected] CGPath];
 }
@@ -172,6 +190,13 @@ static CGFloat const BottomOffset = 15.0f;
     [path closePath];
 
     return path;
+}
+
+- (CGPoint)selectedImagePointForSelected
+{
+    CGPoint selectedImagePoint = [[self pathForSelected] currentPoint];
+    selectedImagePoint.x = selectedImagePoint.x - (self.selectedImageLayer.bounds.size.width * 0.63);
+    return selectedImagePoint;
 }
 
 #pragma mark - UIView drawing
@@ -266,6 +291,13 @@ static CGFloat const BottomOffset = 15.0f;
 
     [self setNeedsDisplay];
     [self setNeedsLayout];
+}
+
+-(void)setSelectedImage:(UIImage *)selectedImage {
+    self.selectedImage = selectedImage;
+    self.selectedValueColor = UIColor.clearColor;
+    
+    [self updateLayers];
 }
 
 - (void)setSelectedItemIndex:(NSInteger)selectedItemIndex

@@ -22,6 +22,12 @@ IB_DESIGNABLE
  */
 @property (nonatomic, strong) IBInspectable UIColor *selectedValueColor;
 
+
+/**
+ * Selected image
+ */
+@property (nonatomic, strong) UIImage *selectedImage;
+
 /**
  * Color of selected label
  */
