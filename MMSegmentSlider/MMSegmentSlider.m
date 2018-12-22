@@ -119,6 +119,7 @@ static CGFloat const BottomOffset = 15.0f;
     self.selectedImageLayer.position = [self selectedImagePointForSelected];
     self.selectedImageLayer.contents = CFBridgingRelease((_selectedValueImage.CGImage));
     
+    [self.selectedImageLayer removeFromSuperlayer];
     [self.selectedLayer addSublayer: self.selectedImageLayer];
     
     self.selectedLayer.fillColor = self.selectedValueColor.CGColor;
