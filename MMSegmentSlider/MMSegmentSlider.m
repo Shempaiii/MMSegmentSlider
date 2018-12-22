@@ -107,7 +107,7 @@ static CGFloat const BottomOffset = 15.0f;
     self.circlesLayer.path = [[self pathForCircles] CGPath];
     
     // Add image to CGShapeLayer
-    if ([[self.selectedLayer sublayers] count] == 0) {
+    if ([[self.selectedLayer sublayers] count] == 0 && self.selectedValueImage != nil) {
         self.selectedImageLayer = [CALayer layer];
         self.selectedImageLayer.backgroundColor = UIColor.clearColor.CGColor;
         self.selectedImageLayer.bounds = [[self pathForSelected] bounds];
@@ -176,7 +176,7 @@ static CGFloat const BottomOffset = 15.0f;
     CGFloat startPointX = self.bounds.origin.x + self.circlesRadius + HorizontalInsets;
     CGFloat intervalSize = (self.bounds.size.width - (self.circlesRadius + HorizontalInsets) * 2.0) / (self.values.count - 1);
     CGFloat yPos = self.bounds.origin.y + self.bounds.size.height - self.circlesRadius - BottomOffset;
-    CGPoint center = CGPointMake(startPointX + self.selectedItemIndex * intervalSize, yPos);
+    CGPoint center = CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + self.selectedItemIndex * intervalSize), yPos);
 
     [path addArcWithCenter:center
                     radius:self.circlesRadiusForSelected
@@ -289,10 +289,8 @@ static CGFloat const BottomOffset = 15.0f;
     [self setNeedsLayout];
 }
 
--(void)setImage:(UIImage *)image {
-    self.selectedValueImage = image;
+-(void)setSelectedValueImage:(UIImage *)selectedValueImage {
     self.selectedValueColor = UIColor.clearColor;
-    
     [self updateLayers];
 }
 

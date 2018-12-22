@@ -73,8 +73,6 @@ IB_DESIGNABLE
  */
 @property (nonatomic) NSInteger selectedItemIndex;
 
-- (void)setImage:(UIImage *)image;
-
 /**
  * Set/get selected item index (animated)
  */
