@@ -136,6 +136,7 @@ static CGFloat const BottomOffset = 15.0f;
     pathAnimation.duration = 0.25f;
     pathAnimation.timingFunction = [CAMediaTimingFunction functionWithControlPoints:0.20 :1.00 :0.70 :1.00];
 
+    self.selectedImageLayer.position = [self selectedImagePointForSelected];
     self.selectedLayer.path = newPath;
     [self.selectedLayer addAnimation:pathAnimation forKey:@"PathAnimation"];
 }
