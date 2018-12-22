@@ -105,22 +105,21 @@ static CGFloat const BottomOffset = 15.0f;
     self.circlesLayer.path = [[self pathForCircles] CGPath];
     
     // Add image to CGShapeLayer
-    
-    self.selectedImageLayer = [CALayer layer];
-    self.selectedImageLayer.backgroundColor = UIColor.clearColor.CGColor;
-    
-    CGRect pathForSelectedBounds = [[self pathForSelected] bounds];
-    CGRect selectedImageRect = CGRectMake(pathForSelectedBounds.origin.x,
-                                          pathForSelectedBounds.origin.y,
-                                          pathForSelectedBounds.size.width * 0.8,
-                                          pathForSelectedBounds.size.height * 0.8);
-    
-    self.selectedImageLayer.bounds = selectedImageRect;
-    self.selectedImageLayer.position = [self selectedImagePointForSelected];
-    self.selectedImageLayer.contents = CFBridgingRelease((_selectedValueImage.CGImage));
-    
-    [self.selectedImageLayer removeFromSuperlayer];
-    [self.selectedLayer addSublayer: self.selectedImageLayer];
+    if ([[self.selectedLayer sublayers] count] == 0) {
+        self.selectedImageLayer = [CALayer layer];
+        self.selectedImageLayer.backgroundColor = UIColor.clearColor.CGColor;
+        
+        CGRect pathForSelectedBounds = [[self pathForSelected] bounds];
+        CGRect selectedImageRect = CGRectMake(pathForSelectedBounds.origin.x,
+                                              pathForSelectedBounds.origin.y,
+                                              pathForSelectedBounds.size.width * 0.8,
+                                              pathForSelectedBounds.size.height * 0.8);
+        
+        self.selectedImageLayer.bounds = selectedImageRect;
+        self.selectedImageLayer.position = [self selectedImagePointForSelected];
+        self.selectedImageLayer.contents = CFBridgingRelease((_selectedValueImage.CGImage));
+        [self.selectedLayer addSublayer: self.selectedImageLayer];
+    }
     
     self.selectedLayer.fillColor = self.selectedValueColor.CGColor;
     self.selectedLayer.path = [[self pathForSelected] CGPath];
