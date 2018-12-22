@@ -78,4 +78,6 @@ IB_DESIGNABLE
  */
 - (void)setSelectedItemIndex:(NSInteger)selectedItemIndex animated:(BOOL)animated;
 
+-(void)setSelectedImage:(UIImage *)selectedImage;
+
 @end
