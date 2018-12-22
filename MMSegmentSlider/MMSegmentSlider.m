@@ -99,7 +99,9 @@ static CGFloat const BottomOffset = 15.0f;
 - (void)updateLayers
 {
     self.sliderLayer.strokeColor = self.basicColor.CGColor;
-    self.sliderLayer.path = [[self pathForSlider] CGPath];
+    if (self.values.count > 1) {
+        self.sliderLayer.path = [[self pathForSlider] CGPath];
+    }
     
     self.circlesLayer.fillColor = self.basicColor.CGColor;
     self.circlesLayer.path = [[self pathForCircles] CGPath];
@@ -155,7 +157,7 @@ static CGFloat const BottomOffset = 15.0f;
     CGFloat yPos = self.bounds.size.height - self.circlesRadius - BottomOffset;
     
     for (int i = 0; i < self.values.count; i++) {
-        CGPoint center = CGPointMake(startPointX + i * intervalSize, yPos);
+        CGPoint center = CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos);
         [path addArcWithCenter:center
                         radius:self.circlesRadius
                     startAngle:0
@@ -211,7 +213,7 @@ static CGFloat const BottomOffset = 15.0f;
         UIColor *textColor = self.selectedItemIndex == i ? self.selectedLabelColor : self.labelColor;
         
         [self drawLabel:[self.labels objectAtIndex:i]
-                atPoint:CGPointMake(startPointX + i * intervalSize, yPos - self.circlesRadius - self.textOffset)
+                atPoint:CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos - self.circlesRadius - self.textOffset)
               withColor:textColor];
     }
 }
