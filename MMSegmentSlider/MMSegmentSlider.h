@@ -48,7 +48,7 @@ IB_DESIGNABLE
  */
 @property (nonatomic) IBInspectable CGFloat textOffset;
     
-@property (nonatomic) CGFloat circleOffset;
+@property (nonatomic) CGFloat selectedImageOffset;
 
 /**
  * Font for labels
