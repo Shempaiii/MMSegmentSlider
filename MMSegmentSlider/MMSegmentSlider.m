@@ -191,6 +191,9 @@ static CGFloat const BottomOffset = 15.0f;
 - (CGPoint)selectedImagePointForSelected
 {
     CGPoint selectedImagePoint = [[self pathForSelected] currentPoint];
+    if (self.circleOffset > 0) {
+        selectedImagePoint.y = selectedImagePoint.y - (self.circlesRadius + self.circleOffset);
+    }
     selectedImagePoint.x = selectedImagePoint.x - (self.selectedImageLayer.bounds.size.width / 2);
     return selectedImagePoint;
 }

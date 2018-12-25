@@ -47,6 +47,8 @@ IB_DESIGNABLE
  * Text offset from the circle
  */
 @property (nonatomic) IBInspectable CGFloat textOffset;
+    
+@property (nonatomic) CGFloat circleOffset;
 
 /**
  * Font for labels
