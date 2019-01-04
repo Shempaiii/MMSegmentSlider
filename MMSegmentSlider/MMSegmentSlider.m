@@ -108,11 +108,14 @@ static CGFloat const BottomOffset = 15.0f;
     
     // Add image to CGShapeLayer
     if ([[self.selectedLayer sublayers] count] == 0 && self.selectedValueImage != nil) {
+        if (self.selectedImageLayer != nil) {
+            CFRelease((__bridge CFTypeRef)(self.selectedImageLayer));
+        }
         self.selectedImageLayer = [CALayer layer];
         self.selectedImageLayer.backgroundColor = UIColor.clearColor.CGColor;
         self.selectedImageLayer.bounds = [[self pathForSelected] bounds];
         self.selectedImageLayer.position = [self selectedImagePointForSelected];
-        self.selectedImageLayer.contents = CFBridgingRelease((_selectedValueImage.CGImage));
+        self.selectedImageLayer.contents = (__bridge id _Nullable)(CFBridgingRetain(_selectedValueImage.CGImage));
         [self.selectedLayer addSublayer: self.selectedImageLayer];
     }
     
