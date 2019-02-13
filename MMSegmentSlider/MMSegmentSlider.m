@@ -75,8 +75,8 @@ static CGFloat const BottomOffset = 15.0f;
     _circlesRadiusForSelected = 26.0f;
     
     _selectedItemIndex = 0;
-    _values = @[@0, @1, @2];
-    _labels = @[@"item 0", @"item 1", @"item 2"];
+    _values = @[];
+    _labels = @[];
     
     _labelsFont = [UIFont fontWithName:@"Helvetica-Light" size:16.0f];
 }
@@ -228,12 +228,42 @@ static CGFloat const BottomOffset = 15.0f;
 {
     NSMutableParagraphStyle* textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     textStyle.alignment = NSTextAlignmentCenter;
-    [label drawInRect:CGRectMake(point.x - 40, point.y - 10, 70, 60)
+    [label drawInRect:CGRectMake(point.x - 35, point.y - 10, 70, 60)
        withAttributes:@{
-                        NSFontAttributeName: self.labelsFont,
+                        NSFontAttributeName: [self getMinimizedFont: self.labelsFont],
                         NSForegroundColorAttributeName: color,
                         NSParagraphStyleAttributeName: textStyle
                         }];
+}
+
+#pragma mark -
+
+- (UIFont*) getMinimizedFont: (UIFont *)font {
+    NSString *longestLabel = [self getLongestLabel];
+    CGSize textSize = [longestLabel sizeWithFont: font];
+    CGFloat widthNeeded = textSize.width * 0.5;
+    if (widthNeeded > (self.circlesRadius * 2)) {
+        UIFont *newFont = [UIFont fontWithName: self.labelsFont.fontName size: font.pointSize - 1];
+        return [self getMinimizedFont: newFont];
+    } else {
+        return font;
+    }
+}
+
+- (NSString *) getLongestLabel {
+    NSArray *sortedLabels = [self.labels sortedArrayUsingComparator:^NSComparisonResult(NSString *first, NSString *second) {
+        return [self compareLengthOf:first withLengthOf:second];
+    }];
+    return sortedLabels[0];
+}
+
+- (NSComparisonResult)compareLengthOf: (NSString *)first withLengthOf: (NSString *)second {
+    if ([first length] > [second length])
+        return NSOrderedAscending;
+    else if ([first length] < [second length])
+        return NSOrderedDescending;
+    else
+        return NSOrderedSame;
 }
 
 #pragma mark - Touch handlers
