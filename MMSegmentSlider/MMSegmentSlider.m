@@ -72,7 +72,7 @@ static CGFloat const BottomOffset = 15.0f;
     
     _textOffset = 30.0f;
     _circlesRadius = 12.0f;
-    _circlesRadiusForSelected = 26.0f;
+    _circlesRadiusForSelected = 12.0f;
     
     _selectedItemIndex = 0;
     _values = @[];
