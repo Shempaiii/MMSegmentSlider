@@ -242,7 +242,7 @@ static CGFloat const BottomOffset = 15.0f;
     NSString *longestLabel = [self getLongestLabel];
     CGSize textSize = [longestLabel sizeWithFont: font];
     CGFloat widthNeeded = textSize.width * 0.5;
-    if (widthNeeded > (self.circlesRadius * 2)) {
+    if (widthNeeded > (self.circlesRadius * 3)) {
         UIFont *newFont = [UIFont fontWithName: self.labelsFont.fontName size: font.pointSize - 1];
         return [self getMinimizedFont: newFont];
     } else {
