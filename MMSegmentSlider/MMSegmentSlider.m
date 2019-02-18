@@ -114,13 +114,13 @@ static CGFloat const BottomOffset = 15.0f;
         self.selectedImageLayer = [CALayer layer];
         self.selectedImageLayer.backgroundColor = UIColor.clearColor.CGColor;
         self.selectedImageLayer.bounds = [[self pathForSelected] bounds];
-        self.selectedImageLayer.position = [self selectedImagePointForSelected];
         self.selectedImageLayer.contents = (__bridge id _Nullable)(CFBridgingRetain(_selectedValueImage.CGImage));
         [self.selectedLayer addSublayer: self.selectedImageLayer];
     }
-    
     self.selectedLayer.fillColor = self.selectedValueColor.CGColor;
     self.selectedLayer.path = [[self pathForSelected] CGPath];
+    
+    self.selectedImageLayer.position = [self selectedImagePointForSelected];
 }
 
 - (void)animateSelectionChange
