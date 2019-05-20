@@ -43,6 +43,8 @@ IB_DESIGNABLE
  */
 @property (nonatomic) IBInspectable CGFloat circlesRadiusForSelected;
 
+@property (nonatomic) IBInspectable CGFloat bottomOffset;
+
 /**
  * Text offset from the circle
  */
@@ -54,6 +56,10 @@ IB_DESIGNABLE
  * Font for labels
  */
 @property (nonatomic, strong) UIFont *labelsFont;
+
+@property (nonatomic, strong) UIFont *selectedFont;
+
+@property (nonatomic, strong) UIFont *unselectedFont;
 
 /**
  * Contains NSNumber values

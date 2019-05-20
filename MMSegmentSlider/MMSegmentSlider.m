@@ -1,7 +1,6 @@
 #import "MMSegmentSlider.h"
 
 static CGFloat const HorizontalInsets = 45.0f;
-static CGFloat const BottomOffset = 15.0f;
 
 @interface MMSegmentSlider ()
 
@@ -70,6 +69,7 @@ static CGFloat const BottomOffset = 15.0f;
     _selectedLabelColor = [UIColor blackColor];
     _labelColor = [UIColor grayColor];
     
+    _bottomOffset = 15.0f;
     _textOffset = 30.0f;
     _circlesRadius = 12.0f;
     _circlesRadiusForSelected = 12.0f;
@@ -79,6 +79,8 @@ static CGFloat const BottomOffset = 15.0f;
     _labels = @[];
     
     _labelsFont = [UIFont fontWithName:@"Helvetica-Light" size:16.0f];
+    _selectedFont = [UIFont fontWithName:@"Helvetica-Light" size:16.0f];
+    _unselectedFont = [UIFont fontWithName:@"Helvetica-Light" size:16.0f];
 }
 
 #pragma mark - Shape Layers
@@ -143,7 +145,7 @@ static CGFloat const BottomOffset = 15.0f;
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     
-    CGFloat lineY = self.bounds.size.height - self.circlesRadius - BottomOffset;
+    CGFloat lineY = self.bounds.size.height - self.circlesRadius - _bottomOffset;
     [path moveToPoint:CGPointMake(self.circlesRadius + HorizontalInsets, lineY)];
     [path addLineToPoint:CGPointMake(self.bounds.size.width - self.circlesRadius - HorizontalInsets, lineY)];
     [path closePath];
@@ -157,7 +159,7 @@ static CGFloat const BottomOffset = 15.0f;
     
     CGFloat startPointX = self.circlesRadius + HorizontalInsets;
     CGFloat intervalSize = (self.bounds.size.width - (self.circlesRadius + HorizontalInsets) * 2.0) / (self.values.count - 1);
-    CGFloat yPos = self.bounds.size.height - self.circlesRadius - BottomOffset;
+    CGFloat yPos = self.bounds.size.height - self.circlesRadius - _bottomOffset;
     
     for (int i = 0; i < self.values.count; i++) {
         CGPoint center = CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos);
@@ -178,7 +180,7 @@ static CGFloat const BottomOffset = 15.0f;
 
     CGFloat startPointX = self.bounds.origin.x + self.circlesRadius + HorizontalInsets;
     CGFloat intervalSize = (self.bounds.size.width - (self.circlesRadius + HorizontalInsets) * 2.0) / (self.values.count - 1);
-    CGFloat yPos = self.bounds.origin.y + self.bounds.size.height - self.circlesRadius - BottomOffset;
+    CGFloat yPos = self.bounds.origin.y + self.bounds.size.height - self.circlesRadius - _bottomOffset;
     CGPoint center = CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + self.selectedItemIndex * intervalSize), yPos);
 
     [path addArcWithCenter:center
@@ -213,24 +215,25 @@ static CGFloat const BottomOffset = 15.0f;
     CGFloat startPointX = self.bounds.origin.x + self.circlesRadius + HorizontalInsets;
     CGFloat intervalSize = (self.bounds.size.width - (self.circlesRadius + HorizontalInsets) * 2.0) / (self.values.count - 1);
     
-    CGFloat yPos = self.bounds.origin.y + self.bounds.size.height + 5 - self.circlesRadiusForSelected - BottomOffset * 2;
+    CGFloat yPos = self.bounds.origin.y + self.bounds.size.height + 5 - self.circlesRadiusForSelected - _bottomOffset * 2;
     
     for (int i = 0; i < self.values.count; i++) {
         UIColor *textColor = self.selectedItemIndex == i ? self.selectedLabelColor : self.labelColor;
         
         [self drawLabel:[self.labels objectAtIndex:i]
                 atPoint:CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos - self.circlesRadius - self.textOffset)
-              withColor:textColor];
+              withColor:textColor
+             isSelected:self.selectedItemIndex == i];
     }
 }
 
-- (void)drawLabel:(NSString*)label atPoint:(CGPoint)point withColor:(UIColor*)color
+- (void)drawLabel:(NSString*)label atPoint:(CGPoint)point withColor:(UIColor*)color isSelected:(BOOL)isSelected
 {
     NSMutableParagraphStyle* textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     textStyle.alignment = NSTextAlignmentCenter;
     [label drawInRect:CGRectMake(point.x - 35, point.y - 10, 70, 60)
        withAttributes:@{
-                        NSFontAttributeName: [self getMinimizedFont: self.labelsFont],
+                        NSFontAttributeName: [self getMinimizedFont: isSelected ? self.selectedFont : self.unselectedFont],
                         NSForegroundColorAttributeName: color,
                         NSParagraphStyleAttributeName: textStyle
                         }];
@@ -243,7 +246,7 @@ static CGFloat const BottomOffset = 15.0f;
     CGSize textSize = [longestLabel sizeWithFont: font];
     CGFloat widthNeeded = textSize.width * 0.5;
     if (widthNeeded > (self.circlesRadius * 3)) {
-        UIFont *newFont = [UIFont fontWithName: self.labelsFont.fontName size: font.pointSize - 1];
+        UIFont *newFont = [UIFont fontWithName: font.fontName size: font.pointSize - 1];
         return [self getMinimizedFont: newFont];
     } else {
         return font;
@@ -301,7 +304,7 @@ static CGFloat const BottomOffset = 15.0f;
 {
     CGFloat startPointX = self.bounds.origin.x + self.circlesRadius + HorizontalInsets;
     CGFloat intervalSize = (self.bounds.size.width - (self.circlesRadius + HorizontalInsets) * 2.0) / (self.values.count - 1);
-    CGFloat yPos = self.bounds.origin.y + self.bounds.size.height - self.circlesRadius - BottomOffset;
+    CGFloat yPos = self.bounds.origin.y + self.bounds.size.height - self.circlesRadius - _bottomOffset;
     
     NSInteger approximateIndex = round((point.x - startPointX) / intervalSize);
     CGFloat xAccuracy = fabs(point.x - (startPointX + approximateIndex * intervalSize));
