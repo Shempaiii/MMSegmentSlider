@@ -101,6 +101,7 @@ static CGFloat const HorizontalInsets = 45.0f;
 - (void)updateLayers
 {
     self.sliderLayer.strokeColor = self.basicColor.CGColor;
+    self.sliderLayer.path = nil;
     if (self.values.count > 1) {
         self.sliderLayer.path = [[self pathForSlider] CGPath];
     }
