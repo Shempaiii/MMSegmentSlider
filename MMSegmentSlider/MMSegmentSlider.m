@@ -236,7 +236,7 @@ static CGFloat const HorizontalInsets = 45.0f;
              isSelected:self.selectedItemIndex == i];
         
         // Bottom
-        if ([self.bottomLabels count] > 0) {
+        if (self.bottomLabels.count > 0) {
             [self drawLabel:[self.bottomLabels objectAtIndex:i]
                     atPoint:CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos - self.circlesRadius - self.bottomTextOffset)
                   withColor:bottomTextColor
