@@ -18,9 +18,19 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable UIColor *labelColor;
 
 /**
+ *  Basic bottom labels color
+ */
+@property (nonatomic, strong) IBInspectable UIColor *bottomLabelColor;
+
+/**
  * Selected value color
  */
 @property (nonatomic, strong) IBInspectable UIColor *selectedValueColor;
+
+/**
+ * Bottom selected value color
+ */
+@property (nonatomic, strong) IBInspectable UIColor *bottomSelectedValueColor;
 
 
 /**
@@ -32,6 +42,11 @@ IB_DESIGNABLE
  * Color of selected label
  */
 @property (nonatomic, strong) IBInspectable UIColor *selectedLabelColor;
+
+/**
+ * Color of selected bottom label
+ */
+@property (nonatomic, strong) IBInspectable UIColor *bottomSelectedLabelColor;
 
 /**
  * Circles radius
@@ -49,6 +64,11 @@ IB_DESIGNABLE
  * Text offset from the circle
  */
 @property (nonatomic) IBInspectable CGFloat textOffset;
+
+/**
+ * Bottom Text offset from the circle
+ */
+@property (nonatomic) IBInspectable CGFloat bottomTextOffset;
     
 @property (nonatomic) CGFloat selectedImageOffset;
 
@@ -56,6 +76,11 @@ IB_DESIGNABLE
  * Font for labels
  */
 @property (nonatomic, strong) UIFont *labelsFont;
+
+/**
+ * Font for bottom labels
+ */
+@property (nonatomic, strong) UIFont *bottomLabelsFont;
 
 @property (nonatomic, strong) UIFont *selectedFont;
 
@@ -70,6 +95,11 @@ IB_DESIGNABLE
  * Contains NSString labels
  */
 @property (nonatomic, strong) NSArray *labels;
+
+/**
+ * Contains NSString bottom labels
+ */
+@property (nonatomic, strong) NSArray *bottomLabels;
 
 /**
  * Set/get current selected value

@@ -8,6 +8,7 @@ static CGFloat const HorizontalInsets = 45.0f;
 @property (nonatomic, strong) CAShapeLayer *circlesLayer;
 @property (nonatomic, strong) CAShapeLayer *selectedLayer;
 @property (nonatomic, strong) CAShapeLayer *labelsLayer;
+@property (nonatomic, strong) CAShapeLayer *bottomLabelsLayer;
 @property (nonatomic, strong) CALayer *selectedImageLayer;
 
 @end
@@ -66,19 +67,25 @@ static CGFloat const HorizontalInsets = 45.0f;
 {
     _basicColor = [UIColor colorWithWhite:0.7f alpha:1.0f];
     _selectedValueColor = [UIColor blackColor];
+    _bottomSelectedValueColor = [UIColor blackColor];
     _selectedLabelColor = [UIColor blackColor];
+    _bottomSelectedLabelColor = [UIColor blackColor];
     _labelColor = [UIColor grayColor];
+    _bottomLabelColor = [UIColor grayColor];
     
     _bottomOffset = 15.0f;
     _textOffset = 30.0f;
+    _bottomTextOffset = -38.0f;
     _circlesRadius = 12.0f;
     _circlesRadiusForSelected = 12.0f;
     
     _selectedItemIndex = 0;
     _values = @[];
     _labels = @[];
+    _bottomLabels = @[];
     
     _labelsFont = [UIFont fontWithName:@"Helvetica-Light" size:16.0f];
+    _bottomLabelsFont = [UIFont fontWithName:@"Helvetica-Light" size:16.0f];
     _selectedFont = [UIFont fontWithName:@"Helvetica-Light" size:16.0f];
     _unselectedFont = [UIFont fontWithName:@"Helvetica-Light" size:16.0f];
 }
@@ -220,11 +227,21 @@ static CGFloat const HorizontalInsets = 45.0f;
     
     for (int i = 0; i < self.values.count; i++) {
         UIColor *textColor = self.selectedItemIndex == i ? self.selectedLabelColor : self.labelColor;
+        UIColor *bottomTextColor = self.selectedItemIndex == i ? self.bottomSelectedLabelColor : self.bottomLabelColor;
         
+        // Top
         [self drawLabel:[self.labels objectAtIndex:i]
                 atPoint:CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos - self.circlesRadius - self.textOffset)
               withColor:textColor
              isSelected:self.selectedItemIndex == i];
+        
+        // Bottom
+        if ([self.bottomLabels count] > 0) {
+            [self drawLabel:[self.bottomLabels objectAtIndex:i]
+                    atPoint:CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos - self.circlesRadius - self.bottomTextOffset)
+                  withColor:bottomTextColor
+                 isSelected:self.selectedItemIndex == i];
+        }
     }
 }
 
