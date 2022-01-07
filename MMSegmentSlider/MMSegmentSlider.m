@@ -82,7 +82,9 @@ static CGFloat const HorizontalInsets = 45.0f;
     _selectedItemIndex = 0;
     _values = @[];
     _labels = @[];
+    _labelsColor = @[];
     _bottomLabels = @[];
+    _bottomLabelsColors = @[];
     
     _labelsFont = [UIFont fontWithName:@"Helvetica-Light" size:16.0f];
     _bottomLabelsFont = [UIFont fontWithName:@"Helvetica-Light" size:16.0f];
@@ -227,7 +229,16 @@ static CGFloat const HorizontalInsets = 45.0f;
     
     for (int i = 0; i < self.values.count; i++) {
         UIColor *textColor = self.selectedItemIndex == i ? self.selectedLabelColor : self.labelColor;
+        
+        if (self.labelsColor.count > 0) {
+            textColor = [self.labelsColor objectAtIndex:i];
+        }
+        
         UIColor *bottomTextColor = self.selectedItemIndex == i ? self.bottomSelectedLabelColor : self.bottomLabelColor;
+        
+        if (self.bottomLabelsColors.count > 0) {
+            textColor = [self.bottomLabelsColors objectAtIndex:i];
+        }
         
         // Top
         [self drawLabel:[self.labels objectAtIndex:i]

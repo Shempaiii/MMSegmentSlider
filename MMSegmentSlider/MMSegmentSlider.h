@@ -96,10 +96,14 @@ IB_DESIGNABLE
  */
 @property (nonatomic, strong) NSArray *labels;
 
+@property (nonatomic, strong) NSArray *labelsColor;
+
 /**
  * Contains NSString bottom labels
  */
 @property (nonatomic, strong) NSArray *bottomLabels;
+
+@property (nonatomic, strong) NSArray *bottomLabelsColors;
 
 /**
  * Set/get current selected value
