@@ -230,24 +230,26 @@ static CGFloat const HorizontalInsets = 45.0f;
     for (int i = 0; i < self.values.count; i++) {
         UIColor *textColor = self.selectedItemIndex == i ? self.selectedLabelColor : self.labelColor;
         
-        if (self.labelsColor.count > 0) {
+        if (self.labelsColor.count > 0 && i <= (self.labelsColor.count - 1)) {
             textColor = [self.labelsColor objectAtIndex:i];
         }
         
         UIColor *bottomTextColor = self.selectedItemIndex == i ? self.bottomSelectedLabelColor : self.bottomLabelColor;
         
-        if (self.bottomLabelsColors.count > 0) {
+        if (self.bottomLabelsColors.count > 0 && i <= (self.bottomLabelsColors.count - 1)) {
             textColor = [self.bottomLabelsColors objectAtIndex:i];
         }
         
+        if (i <= (self.labels.count - 1)) {
         // Top
         [self drawLabel:[self.labels objectAtIndex:i]
                 atPoint:CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos - self.circlesRadius - self.textOffset)
               withColor:textColor
              isSelected:self.selectedItemIndex == i];
+        }
         
         // Bottom
-        if (self.bottomLabels.count > 0) {
+        if (self.bottomLabels.count > 0 && i <= (self.bottomLabels.count - 1)) {
             [self drawLabel:[self.bottomLabels objectAtIndex:i]
                     atPoint:CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos - self.circlesRadius - self.bottomTextOffset)
                   withColor:bottomTextColor
@@ -388,7 +390,10 @@ static CGFloat const HorizontalInsets = 45.0f;
 
 - (NSObject *)currentValue
 {
-    return [self.values objectAtIndex:self.selectedItemIndex];
+    if (self.selectedItemIndex <= (self.values.count - 1)) {
+        return [self.values objectAtIndex:self.selectedItemIndex];
+    }
+    return nil;
 }
 
 #pragma mark - UIAccessibility
