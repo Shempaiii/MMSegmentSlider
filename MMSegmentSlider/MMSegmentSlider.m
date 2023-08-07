@@ -230,17 +230,17 @@ static CGFloat const HorizontalInsets = 45.0f;
     for (int i = 0; i < self.values.count; i++) {
         UIColor *textColor = self.selectedItemIndex == i ? self.selectedLabelColor : self.labelColor;
         
-        if (self.labelsColor.count > 0 && i <= (self.labelsColor.count - 1)) {
+        if (self.labelsColor.count > 0 && (i <= (self.labelsColor.count - 1))) {
             textColor = [self.labelsColor objectAtIndex:i];
         }
         
         UIColor *bottomTextColor = self.selectedItemIndex == i ? self.bottomSelectedLabelColor : self.bottomLabelColor;
         
-        if (self.bottomLabelsColors.count > 0 && i <= (self.bottomLabelsColors.count - 1)) {
+        if ((self.bottomLabelsColors.count > 0) && (i <= (self.bottomLabelsColors.count - 1))) {
             textColor = [self.bottomLabelsColors objectAtIndex:i];
         }
         
-        if (i <= (self.labels.count - 1)) {
+        if ((self.labels.count > 0) && (i <= (self.labels.count - 1))) {
         // Top
         [self drawLabel:[self.labels objectAtIndex:i]
                 atPoint:CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos - self.circlesRadius - self.textOffset)
@@ -249,7 +249,7 @@ static CGFloat const HorizontalInsets = 45.0f;
         }
         
         // Bottom
-        if (self.bottomLabels.count > 0 && i <= (self.bottomLabels.count - 1)) {
+        if ((self.bottomLabels.count > 0) && (i <= (self.bottomLabels.count - 1))) {
             [self drawLabel:[self.bottomLabels objectAtIndex:i]
                     atPoint:CGPointMake(self.values.count == 1 ? self.center.x : (startPointX + i * intervalSize), yPos - self.circlesRadius - self.bottomTextOffset)
                   withColor:bottomTextColor
@@ -288,7 +288,10 @@ static CGFloat const HorizontalInsets = 45.0f;
     NSArray *sortedLabels = [self.labels sortedArrayUsingComparator:^NSComparisonResult(NSString *first, NSString *second) {
         return [self compareLengthOf:first withLengthOf:second];
     }];
-    return sortedLabels[0];
+    if (sortedLabels.count > 0) {
+        return sortedLabels[0];
+    }
+    return @"";
 }
 
 - (NSComparisonResult)compareLengthOf: (NSString *)first withLengthOf: (NSString *)second {
@@ -390,7 +393,7 @@ static CGFloat const HorizontalInsets = 45.0f;
 
 - (NSObject *)currentValue
 {
-    if (self.selectedItemIndex <= (self.values.count - 1)) {
+    if ((self.values.count > 0) && (self.selectedItemIndex <= (self.values.count - 1))) {
         return [self.values objectAtIndex:self.selectedItemIndex];
     }
     return nil;
